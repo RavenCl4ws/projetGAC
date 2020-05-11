@@ -1,4 +1,4 @@
-package servlets;
+
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,16 +13,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 /**
  * Servlet implementation class Connexion
  */
-public class Connexion extends HttpServlet {
+public class BaseConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Connexion() {
+    public BaseConnexion() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,6 +40,17 @@ public class Connexion extends HttpServlet {
 		String usernameEntered=request.getParameter("username");
 		String passwordEntered=request.getParameter("password");
 		String passwordEncrypted="";
+		Configuration config = new Configuration();
+		SessionFactory sessionFactory = config.configure().buildSessionFactory();
+		// Ouverture session
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		//===========Opérations================
+		
+		session.getTransaction().commit();
+		// Fermeture session
+		session.close();
 		try {
 			 passwordEncrypted=new String(encrypt(passwordEntered));
 		} catch (Exception e) {
