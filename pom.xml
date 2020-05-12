@@ -64,6 +64,12 @@
 			<artifactId>hibernate-validator-annotation-processor</artifactId>
 			<version>6.0.2.Final</version>
 		</dependency>
+		
+		<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jstl</artifactId>
+		<version>1.2</version>
+		</dependency>
 
 	</dependencies>
   <build>
