@@ -1,0 +1,71 @@
+
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.*;
+import org.hibernate.cfg.Configuration;
+
+import beans.Inscription;
+import com.google.gson.*;
+
+
+/**
+ * Servlet implementation class TestBase
+ */
+public class TestBase extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public TestBase() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Configuration config = new Configuration();
+		SessionFactory sessionFactory = config.configure().buildSessionFactory();
+		//Ouverture session
+		Session session = sessionFactory.openSession();
+		
+		Inscription monCompte = new Inscription("clem", "clementjourdain14@gmail.com","pass", "jourdain", "clement", "17/03/1995",
+				"france", "0102030405");
+		
+		
+		String JSONretour="";
+		
+		session.save(monCompte);
+		Inscription compte;
+		int id;
+		try {
+			id=monCompte.getId();
+			compte = session.get(Inscription.class,id);
+			JSONretour = new Gson().toJson(compte.toString());
+		}
+		catch (Exception e)
+		{
+			JSONretour = new Gson().toJson("Erreur création compte");
+		}
+		session.close();
+		//request.setAttribute("json",JSONretour);
+		System.out.println(JSONretour);
+		response.getWriter().append(JSONretour);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
