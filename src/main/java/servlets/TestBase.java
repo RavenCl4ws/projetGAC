@@ -36,8 +36,19 @@ public class TestBase extends HttpServlet {
 		//Ouverture session
 		Session session = sessionFactory.openSession();
 		
-		Inscription monCompte = new Inscription("clem", "clementjourdain14@gmail.com","pass", "jourdain", "clement", "17/03/1995",
-				"france", "0102030405");
+		//Inscription monCompte = new Inscription("clem", "clementjourdain14@gmail.com","pass", "jourdain", "clement", "17/03/1995",
+		//		"france", "0102030405");
+		String pseudo = request.getParameter("pseudo");
+		String email = request.getParameter("email");
+		String motPasse = request.getParameter("motPasse");
+		String nom = request.getParameter("nom");
+		String prenom = request.getParameter("prenom");
+		String dateNaissance = request.getParameter("dateNaissance");
+		String pays = request.getParameter("pays");
+		String numeroTel = request.getParameter("numeroTel");
+		
+		
+		Inscription monCompte=new Inscription(pseudo,email,motPasse,nom,prenom,dateNaissance,pays,numeroTel);
 		
 		
 		String JSONretour="";
@@ -58,6 +69,8 @@ public class TestBase extends HttpServlet {
 		//request.setAttribute("json",JSONretour);
 		System.out.println(JSONretour);
 		response.getWriter().append(JSONretour);
+		
+		this.getServletContext().getRequestDispatcher("/pageInscription.jsp").forward(request,response);
 	}
 
 	/**
