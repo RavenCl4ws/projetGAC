@@ -1,28 +1,30 @@
 
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import com.google.gson.*;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
-import beans.Inscription;
-import com.google.gson.*;
 
+import beans.Inscription;
 
 /**
- * Servlet implementation class TestBase
+ * Servlet implementation class TestConnexion
  */
-public class TestBase extends HttpServlet {
+public class TestInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TestBase() {
+    public TestInscription() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +33,13 @@ public class TestBase extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
 		Configuration config = new Configuration();
 		SessionFactory sessionFactory = config.configure().buildSessionFactory();
 		//Ouverture session
 		Session session = sessionFactory.openSession();
 		
-		Inscription clement = new Inscription("clem", "clementjourdain14@gmail.com","pass", "jourdain", "clement", "17/03/1995","france", "0102030405");
 		String pseudo = request.getParameter("pseudo");
 		String email = request.getParameter("email");
 		String motPasse = request.getParameter("motPasse");
@@ -46,31 +49,40 @@ public class TestBase extends HttpServlet {
 		String pays = request.getParameter("pays");
 		String numeroTel = request.getParameter("numeroTel");
 		
+		boolean succes=false;
+		String message="";
 		
-		
-		Inscription monCompte=new Inscription(pseudo,email,motPasse,nom,prenom,dateNaissance,pays,numeroTel);
-		
-		
-		String JSONretour="";
-		
-		session.save(monCompte);
-		Inscription compte;
-		int id;
-		try {
-			id=monCompte.getId();
-			compte = session.get(Inscription.class,id);
-			JSONretour = new Gson().toJson(compte.toString());
-		}
-		catch (Exception e)
+		if(pseudo!=null && email!=null && motPasse!=null)
 		{
-			JSONretour = new Gson().toJson("Erreur création compte");
+			boolean checkPseudo=services.VerifBaseDeDonnees.verifPseudoInscription(pseudo,session);
+			if (checkPseudo)
+				message="Le pseudo existe déjà";
+			boolean checkMail=services.VerifBaseDeDonnees.verifMailInscription(email,session);
+			if (checkMail)
+				message="L'email existe déjà";
+			if (!checkPseudo && !checkMail)
+			{
+				Inscription monCompte=new Inscription(pseudo,email,motPasse,nom,prenom,dateNaissance,pays,numeroTel);
+				session.save(monCompte);
+				checkPseudo=services.VerifBaseDeDonnees.verifPseudoInscription(pseudo,session);
+				if(checkPseudo)
+				{
+					message="L'inscrition a réussi";
+					succes=true;
+				}	
+			}
 		}
-		session.close();
-		//request.setAttribute("json",JSONretour);
-		System.out.println(JSONretour);
-//		response.getWriter().append(JSONretour);
-		response.sendRedirect("http://localhost:4200/accueil");
-//		this.getServletContext().getRequestDispatcher("http://localhost:4200/accueil").forward(request,response);
+			session.close();
+			
+			System.out.println(message);	
+			String JSONretour = new Gson().toJson(message);
+			request.setAttribute("json",JSONretour);
+			if (succes) {
+				response.sendRedirect("http://localhost:4200/accueil?message="+message);
+			}
+			else {
+				response.sendRedirect("http://localhost:4200/test?message="+message);
+			}
 	}
 
 	/**
@@ -81,4 +93,6 @@ public class TestBase extends HttpServlet {
 		doGet(request, response);
 	}
 
+	
+	
 }

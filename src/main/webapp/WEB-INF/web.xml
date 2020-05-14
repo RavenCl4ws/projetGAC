@@ -16,6 +16,12 @@
   	<description></description>
   	<servlet-class>TestBase</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>TestInscription</servlet-name>
+  	<display-name>TestInscription</display-name>
+  	<description></description>
+  	<servlet-class>TestInscription</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>test</servlet-name>
   	<url-pattern>/test</url-pattern>
@@ -23,6 +29,10 @@
   <servlet-mapping>
   	<servlet-name>TestBase</servlet-name>
   	<url-pattern>/TestBase</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>TestInscription</servlet-name>
+  	<url-pattern>/TestInscription</url-pattern>
   </servlet-mapping>
   
 	<filter>
