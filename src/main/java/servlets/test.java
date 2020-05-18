@@ -43,7 +43,7 @@ public class test extends HttpServlet {
 				    content.append(inputLine);
 				}
 				in.close();
-		System.out.println(content);		
+//		System.out.println(content);		
 		response.getWriter().append(content);
 		}
 
