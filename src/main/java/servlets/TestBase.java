@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Query;
 import javax.servlet.ServletException;
@@ -39,100 +40,70 @@ public class TestBase extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-
-//		String pseudo =  request.getParameter("pseudo");
-//		String email = request.getParameter("email");
-//		String motPasse = request.getParameter("motPasse");
-//		String nom = request.getParameter("nom");
-//		String prenom = request.getParameter("prenom");
-//		String dateNaissance = request.getParameter("dateNaissance");
-//		String pays = request.getParameter("pays");
-//System.out.println("pseudo:"+pseudo);
-//		String numeroTel = request.getParameter("numeroTel");
-//		System.out.println("email:"+email);
-	    	BufferedReader in = request.getReader();
-			String inputLine;
-			StringBuffer content = new StringBuffer();
-			while ((inputLine = in.readLine()) != null) {
-			    content.append(inputLine);
+		String message="";
+		
+		//recuperation des infos du formaulaire Angular
+		String requestData = request.getReader().lines().collect(Collectors.joining());
+		//System.out.println(requestData);
+		
+		//Les transformer en JSON pour pouvoir extraire les infos plus facilement
+		JsonObject objetRecu = new JsonParser().parse(requestData).getAsJsonObject();
+		
+		//Ouverture session
+		Configuration config = new Configuration();
+		SessionFactory sessionFactory = config.configure().buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		//Enregistrement des infos dans des variables locales
+		String pseudo = objetRecu.get("pseudo").getAsString();
+		String email = objetRecu.get("email").getAsString();
+		String motPasse = objetRecu.get("motPasse").getAsString();
+		String nom = objetRecu.get("nom").getAsString();
+		String prenom = objetRecu.get("prenom").getAsString();
+		String dateNaissance = objetRecu.get("dateNaissance").getAsString();
+		String pays = objetRecu.get("pays").getAsString();
+		String numeroTel = objetRecu.get("numeroTel").getAsString();
+		
+//		System.out.println(pseudo);
+//		System.out.println(email);
+		
+		//Differents tests sur l'existence en base de l'utilisateur
+		boolean succes=false;
+		
+		
+		if(pseudo!=null && email!=null && motPasse!=null)
+		{
+			boolean checkPseudo=services.VerifBaseDeDonnees.verifPseudoInscription(pseudo,session);
+			if (checkPseudo) {
+				message="Le pseudo existe d√©j√†";
+//			System.out.println(message);
 			}
-			in.close();
-			System.out.println(content);
-			String JSONretour = new Gson().toJson(content.toString());
-			System.out.println(JSONretour);
-			JsonParser parser = new JsonParser();
-//			JsonObject realjsonretour = parser.parse(JSONretour);
-//			String pseudo = (String) realjsonretour.get("pseudo");
-//			String email = JSONretour.getParameter("email").toString();
-//			String motPasse = JSONretour.getParameter("motPasse");
-//			String nom = JSONretour.getParameter("nom");
-//			String prenom = JSONretour.getParameter("prenom");
-//			String dateNaissance = JSONretour.getParameter("dateNaissance");
-//			String pays = JSONretour.getParameter("pays");
-//			String numeroTel = JSONretour.getParameter("numeroTel");
-//			
-//	    
-//			System.out.println(content);		
-//			response.getWriter().append(content);
-//	    
-//	 
-//	    String user = (String) joUser.get("name");
-//	 
-//	    response.setContentType("text/html");
-//	    PrintWriter out = response.getWriter();
-//	    out.write("A new user " + user + " has been created.");
-//	    out.flush();
-//	    out.close();
-//	  }
-//	
-//		Configuration config = new Configuration();
-//		SessionFactory sessionFactory = config.configure().buildSessionFactory();
-//		//Ouverture session
-//		Session session = sessionFactory.openSession();
-//		
-//		String pseudo = request.getParameter("pseudo");
-//		String email = request.getParameter("email");
-//		String motPasse = request.getParameter("motPasse");
-//		String nom = request.getParameter("nom");
-//		String prenom = request.getParameter("prenom");
-//		String dateNaissance = request.getParameter("dateNaissance");
-//		String pays = request.getParameter("pays");
-//		String numeroTel = request.getParameter("numeroTel");
-//		
-//		boolean succes=false;
-//		String message="";
-//		
-//		if(pseudo!=null && email!=null && motPasse!=null)
-//		{
-//			boolean checkPseudo=services.VerifBaseDeDonnees.verifPseudoInscription(pseudo,session);
-//			if (checkPseudo)
-//				message="Le pseudo existe dÈj‡†";
-//			boolean checkMail=services.VerifBaseDeDonnees.verifMailInscription(email,session);
-//			if (checkMail)
-//				message="L'email existe dÈj‡†";
-//			if (!checkPseudo && !checkMail)
-//			{
-//				Inscription monCompte=new Inscription(pseudo,email,motPasse,nom,prenom,dateNaissance,pays,numeroTel);
-//				session.save(monCompte);
-//				checkPseudo=services.VerifBaseDeDonnees.verifPseudoInscription(pseudo,session);
-//				if(checkPseudo)
-//				{
-//					message="L'inscrition a rÈussi";
-//					succes=true;
-//				}	
-//			}
-//		}
-//			session.close();
-//			
-//			System.out.println(message);	
-//			String JSONretour = new Gson().toJson(message);
-//			request.setAttribute("json",JSONretour);
-//			if (succes) {
-//				response.sendRedirect("http://localhost:4200/accueil?message="+message);
-//			}
-//			else {
-//				response.sendRedirect("http://localhost:4200/test?message="+message);
-//			}
+			boolean checkMail=services.VerifBaseDeDonnees.verifMailInscription(email,session);
+			if (checkMail) {
+				message="L'email existe d√©j√†";
+//			System.out.println(message);
+			}
+			if (!checkPseudo && !checkMail)
+			{	
+				//Enregistrement des infos dans la BDD
+				Inscription monCompte=new Inscription(pseudo,email,motPasse,nom,prenom,dateNaissance,pays,numeroTel);
+				session.save(monCompte);
+				checkPseudo=services.VerifBaseDeDonnees.verifPseudoInscription(pseudo,session);
+				
+				//Verification que l'enregistrement s'est bien effectuÈ
+				if(checkPseudo)
+				{	
+					message="L'inscrition a r√©ussi";
+//					System.out.println(message);
+					succes=true;
+				}	
+			}
+		}
+		
+			session.close();
+			
+			//Retour du message ‡ Angular
+			response.getWriter().append(message);
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
