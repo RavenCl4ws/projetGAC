@@ -22,6 +22,24 @@
   	<description></description>
   	<servlet-class>TestInscription</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>TestJeu</servlet-name>
+  	<display-name>TestJeu</display-name>
+  	<description></description>
+  	<servlet-class>TestJeu</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AjoutJeuPossede</servlet-name>
+  	<display-name>AjoutJeuPossede</display-name>
+  	<description></description>
+  	<servlet-class>AjoutJeuPossede</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AjoutJeuBase</servlet-name>
+  	<display-name>AjoutJeuBase</display-name>
+  	<description></description>
+  	<servlet-class>AjoutJeuBase</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>test</servlet-name>
   	<url-pattern>/test</url-pattern>
@@ -33,6 +51,18 @@
   <servlet-mapping>
   	<servlet-name>TestInscription</servlet-name>
   	<url-pattern>/TestInscription</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>TestJeu</servlet-name>
+  	<url-pattern>/TestJeu</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AjoutJeuPossede</servlet-name>
+  	<url-pattern>/AjoutJeuPossede</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AjoutJeuBase</servlet-name>
+  	<url-pattern>/AjoutJeuBase</url-pattern>
   </servlet-mapping>
   
 	<filter>

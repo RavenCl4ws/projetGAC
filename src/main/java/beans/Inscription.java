@@ -1,6 +1,9 @@
 package beans;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 @Entity
 public class Inscription {
@@ -20,6 +23,13 @@ public class Inscription {
 	private String numeroTel;
 	//private String plateforme;
 	//private String genreFavori;
+	@ManyToMany(cascade= {CascadeType.ALL})
+	@JoinTable(
+			name="liste_Jeux_Possedes",
+			joinColumns= { @JoinColumn(name="user_id") },
+			inverseJoinColumns = { @JoinColumn(name="jeuvideo_idjeu")}
+			)
+	private List<JeuVideo> listeJeuxPossedes=new ArrayList<JeuVideo>(); 
 	
 	public Inscription() {}
 
@@ -95,6 +105,16 @@ public class Inscription {
 		Id = id;
 	}
 
+	
+	
+	public List<JeuVideo> getListeJeuxPossedes() {
+		return listeJeuxPossedes;
+	}
+
+	public void setListeJeuxPossedes(List<JeuVideo> listeJeuxPossedes) {
+		this.listeJeuxPossedes = listeJeuxPossedes;
+	}
+
 	public Inscription(String pseudo, String mail, String motPasse, String nom, String prenom, String dateNaissance,
 			String pays, String numeroTel) {
 		super();
@@ -112,8 +132,10 @@ public class Inscription {
 	public String toString() {
 		return "Inscription [Id=" + Id + ", pseudo=" + pseudo + ", mail=" + mail + ", motPasse=" + motPasse + ", nom="
 				+ nom + ", prenom=" + prenom + ", dateNaissance=" + dateNaissance + ", pays=" + pays + ", numeroTel="
-				+ numeroTel + "]";
+				+ numeroTel + ", listeJeuxPossedes=" + listeJeuxPossedes + "]";
 	}
+
+
 	
 	
 	

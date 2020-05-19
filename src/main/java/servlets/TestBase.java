@@ -90,7 +90,7 @@ public class TestBase extends HttpServlet {
 				session.save(monCompte);
 				checkPseudo=services.VerifBaseDeDonnees.verifPseudoInscription(pseudo,session);
 				
-				//Verification que l'enregistrement s'est bien effectuÈ
+				//Verification que l'enregistrement s'est bien effectu√©
 				if(checkPseudo)
 				{	
 					message="L'inscrition a r√©ussi";
@@ -102,7 +102,7 @@ public class TestBase extends HttpServlet {
 		
 			session.close();
 			
-			//Retour du message ‡ Angular
+			//Retour du message √† Angular
 			response.getWriter().append(message);
 	}
 	/**
