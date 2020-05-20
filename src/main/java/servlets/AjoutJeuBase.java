@@ -32,7 +32,7 @@ public class AjoutJeuBase extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-				// Servlet pas encore testé
+				
 		
 				String message="";
 				//Ouverture session

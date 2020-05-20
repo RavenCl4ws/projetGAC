@@ -71,4 +71,32 @@ public static boolean verifJeu(String nomJeu,String genrePrincipal,Session sessi
 	}
 }
 
+
+public static boolean verifListeJeuxPossedes(JeuVideo monJeu,Inscription monCompte)
+{
+	boolean checkJeuPossede=false;
+	int idJeu=monJeu.getIdJeu();
+	//Vérif si jeu déjà dans liste jeux de utilisateur
+	for (int i=0; i<monCompte.getListeJeuxPossedes().size();i++)
+	{
+		if (monCompte.getListeJeuxPossedes().get(i).getIdJeu()==idJeu)
+			checkJeuPossede=true;
+	}
+	return checkJeuPossede;
+}
+
+
+public static boolean verifCompte(String pseudo,String motPasse,Session session)
+{
+	boolean checkCompte=false;
+	Query query=session.createQuery("from Inscription where pseudo=:pseudo AND mot_passe=:motPasse");
+	query.setParameter("pseudo", pseudo);
+	query.setParameter("motPasse", motPasse);
+	List <Inscription> resultat=query.list();
+	if(resultat.size()!=0)
+		checkCompte=true;
+	
+	return checkCompte;
+	
+}
 }

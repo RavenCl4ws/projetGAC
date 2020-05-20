@@ -71,8 +71,8 @@ public class JeuVideo {
 
 	@Override
 	public String toString() {
-		return "JeuVideo [IdJeu=" + IdJeu + ", nomJeu=" + nomJeu + ", genrePrincipal=" + genrePrincipal
-				+ ", noteMoyenne=" + noteMoyenne + "]";
+		return "IdJeu=" + IdJeu + ", nomJeu=" + nomJeu + ", genrePrincipal=" + genrePrincipal
+				+ ", noteMoyenne=" + noteMoyenne;
 	}
 	
 	

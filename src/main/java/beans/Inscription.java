@@ -130,9 +130,9 @@ public class Inscription {
 
 	@Override
 	public String toString() {
-		return "Inscription [Id=" + Id + ", pseudo=" + pseudo + ", mail=" + mail + ", motPasse=" + motPasse + ", nom="
-				+ nom + ", prenom=" + prenom + ", dateNaissance=" + dateNaissance + ", pays=" + pays + ", numeroTel="
-				+ numeroTel + ", listeJeuxPossedes=" + listeJeuxPossedes + "]";
+		return "Id=" + Id + "\n pseudo=" + pseudo + "\n mail=" + mail + "\n motPasse=" + motPasse + "\n nom="
+				+ nom + "\n prenom=" + prenom + "\n dateNaissance=" + dateNaissance + "\n pays=" + pays + "\n numeroTel="
+				+ numeroTel+"\n liste Jeux Possedes=" +listeJeuxPossedes;
 	}
 
 
