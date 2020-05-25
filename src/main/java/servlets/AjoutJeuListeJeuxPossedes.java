@@ -145,6 +145,13 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 				messageCreationJeu="le jeu a été ajouté à votre liste";
 			}
 			
+			System.out.println(messageCreationJeu);
+			
+			for (JeuVideo j : monCompte.getListeJeuxPossedes())
+			{
+				System.out.println(j.toString());
+			}
+			
 			
 			// Fin one to many
 			

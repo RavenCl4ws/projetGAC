@@ -1,6 +1,8 @@
 
 
 import java.io.IOException;
+import java.util.stream.Collectors;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +14,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.google.gson.Gson;
-
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import beans.Inscription;
 import beans.JeuVideo;
@@ -38,13 +40,23 @@ public class ConnexionUtilisateur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		//A faire: récupérer infos angular mail+mdp ou pseudo+mdp
+		//A faire: récupérer infos angular pseudo+mdp
 		//Aller requeter en bdd pour savoir si existe
 		//si non: renvoyer un message si oui renvoyer infos utilisateur
 		
 		// Récupération des infos depuis Angular
-		String pseudo="jr";
-		String motPasse="pass";
+		
+		String requestData = request.getReader().lines().collect(Collectors.joining());
+		//System.out.println(requestData);
+		
+		//Les transformer en JSON pour pouvoir extraire les infos plus facilement
+		JsonObject objetRecu = new JsonParser().parse(requestData).getAsJsonObject();
+		
+		String pseudo = objetRecu.get("pseudo").getAsString();
+		String motPasse = objetRecu.get("motPasse").getAsString();
+		
+		//String pseudo="jr";
+		//String motPasse="pass";
 		
 		String jsonInString="";
 		
@@ -69,13 +81,18 @@ public class ConnexionUtilisateur extends HttpServlet {
 		
 		//Objectif: envoyer les données utilisateur en JSON
 		 
-		    jsonInString = new Gson().toJson(monCompte);
+			int id=monCompte.getId();
+			String x= Integer.toString(id);
+			String pseudoRecup=monCompte.getPseudo();
+		    jsonInString = new Gson().toJson("id:"+x+",pseudo:"+pseudoRecup);
 	
 		}
 		catch(Exception e) {
 		
-			jsonInString=new Gson().toJson("le compte n'existe pas");
+			jsonInString=new Gson().toJson("texteErreur");
 		}
+		
+		System.out.println(jsonInString);
 		
 		session.getTransaction().commit();
 		session.close();
