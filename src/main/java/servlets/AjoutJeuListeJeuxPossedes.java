@@ -42,17 +42,20 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 		// Ensuite, il vérifie si le jeu existe dans la liste de jeux possédés par l'utilisateur, si il n'existe pas il l'ajoute
 		// Décider du renvoi à faire à Angular: pour le moment, des messages sont affichés dans la console jee
 		
+		//Version 2: on ne vérifie plus si le jeu est dans la base car on doit l'ajouter pour chaque utiisateur
+		
+		
 		String messageCreationJeu="";
-		String messageAjoutListeJeuxPossedes="";
+		// Inutilisé pour one to many: String messageAjoutListeJeuxPossedes="";
 		//Récupération paramètres depuis Angular??
 		String nomJeu="pcm";
-		String genrePrincipal="autregenre";
-		double noteMoyenne=10.00;
+		String genrePrincipal="sport";
+		double note=10.00;
 		int idUser=1;
 		
 		//Instanciation User et Jeu à récupérer 
 		Inscription monCompte=new Inscription();
-		JeuVideo monJeu= new JeuVideo();
+		// inutilisé pour one to many: JeuVideo monJeu= new JeuVideo();
 		
 		//Ouverture session
 		Configuration config = new Configuration();
@@ -62,7 +65,11 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 		//Début Transaction
 		session.beginTransaction();
 		
+		/* Version en manytomany
+		
 		//Vérif existence 
+		
+		
 				boolean succes=false;
 				boolean checkJeu=services.VerifBaseDeDonnees.verifJeu(nomJeu,genrePrincipal,session);
 				//Existe deja
@@ -74,12 +81,13 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 				//Mise en base
 				if (!checkJeu)
 				{
-					JeuVideo jeuAjoute= new JeuVideo(nomJeu,genrePrincipal,noteMoyenne);
+		
+					JeuVideo jeuAjoute= new JeuVideo(nomJeu,genrePrincipal,note);
 					session.save(jeuAjoute);
-					checkJeu=services.VerifBaseDeDonnees.verifJeu(nomJeu,genrePrincipal,session);
+					boolean checkJeu=services.VerifBaseDeDonnees.verifJeu(nomJeu,genrePrincipal,session);
 					if (checkJeu)
 					{
-						succes=true;
+						
 						messageCreationJeu="Le jeu a été ajouté à la BDD";
 					}
 				}
@@ -115,6 +123,30 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 			
 				//infos utilisateur
 				System.out.println(monCompte.toString());
+			
+			Fin version many to many */
+		
+			//début version one to many
+		
+			boolean verifJeuPossede=false;
+			monCompte=session.get(Inscription.class, idUser);
+			for (int i=0;i<monCompte.getListeJeuxPossedes().size();i++)
+			{
+				if(monCompte.getListeJeuxPossedes().get(i).getNomJeu().equals(nomJeu))
+					verifJeuPossede=true;
+			}
+			if(verifJeuPossede)
+				messageCreationJeu="le jeu est déjà dans votre liste";
+			if(!verifJeuPossede)
+			{
+				JeuVideo jeuAjoute= new JeuVideo(nomJeu,genrePrincipal,note);
+				session.save(jeuAjoute);
+				monCompte.getListeJeuxPossedes().add(jeuAjoute);
+				messageCreationJeu="le jeu a été ajouté à votre liste";
+			}
+			
+			
+			// Fin one to many
 			
 				//Fin de transaction et fermeture de session
 				session.getTransaction().commit();

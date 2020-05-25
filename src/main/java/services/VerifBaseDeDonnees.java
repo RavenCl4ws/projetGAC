@@ -86,17 +86,18 @@ public static boolean verifListeJeuxPossedes(JeuVideo monJeu,Inscription monComp
 }
 
 
-public static boolean verifCompte(String pseudo,String motPasse,Session session)
+
+
+public static Inscription verifUtilisateur(String pseudo,String motPasse,Session session)
 {
-	boolean checkCompte=false;
-	Query query=session.createQuery("from Inscription where pseudo=:pseudo AND mot_passe=:motPasse");
+	Inscription compte=new Inscription();
+	Query<Inscription> query=session.createQuery("from Inscription where pseudo=:pseudo AND mot_passe=:motPasse");
 	query.setParameter("pseudo", pseudo);
 	query.setParameter("motPasse", motPasse);
-	List <Inscription> resultat=query.list();
-	if(resultat.size()!=0)
-		checkCompte=true;
+		compte=query.uniqueResult();
 	
-	return checkCompte;
+	return compte;
 	
 }
+
 }

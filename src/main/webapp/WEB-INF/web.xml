@@ -52,6 +52,12 @@
   	<description></description>
   	<servlet-class>ConnexionUtilisateur</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>TestJson</servlet-name>
+  	<display-name>TestJson</display-name>
+  	<description></description>
+  	<servlet-class>TestJson</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>test</servlet-name>
   	<url-pattern>/test</url-pattern>
@@ -83,6 +89,10 @@
   <servlet-mapping>
   	<servlet-name>ConnexionUtilisateur</servlet-name>
   	<url-pattern>/ConnexionUtilisateur</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>TestJson</servlet-name>
+  	<url-pattern>/TestJson</url-pattern>
   </servlet-mapping>
   
 	<filter>

@@ -11,9 +11,9 @@ public class JeuVideo {
 	private int IdJeu;
 	private String nomJeu;
 	private String genrePrincipal;
-	private double noteMoyenne;
-	@ManyToMany(mappedBy="listeJeuxPossedes")
-	private List<Inscription> listeUtilisateurs= new ArrayList<Inscription>();
+	private double note;
+	//@ManyToMany(mappedBy="listeJeuxPossedes")
+	//private List<Inscription> listeUtilisateurs= new ArrayList<Inscription>();
 	
 	
 	
@@ -43,36 +43,29 @@ public class JeuVideo {
 		this.genrePrincipal = genrePrincipal;
 	}
 
-	public double getNoteMoyenne() {
-		return noteMoyenne;
+	public double getNote() {
+		return note;
 	}
 
-	public void setNoteMoyenne(double noteMoyenne) {
-		this.noteMoyenne = noteMoyenne;
+	public void setNote(double note) {
+		this.note = note;
 	}
 	
 	
 	
 
-	public List<Inscription> getListeUtilisateurs() {
-		return listeUtilisateurs;
-	}
-
-	public void setListeUtilisateurs(List<Inscription> listeUtilisateurs) {
-		this.listeUtilisateurs = listeUtilisateurs;
-	}
-
-	public JeuVideo(String nomJeu, String genrePrincipal, double noteMoyenne) {
+	
+	public JeuVideo(String nomJeu, String genrePrincipal, double note) {
 		super();
 		this.nomJeu = nomJeu;
 		this.genrePrincipal = genrePrincipal;
-		this.noteMoyenne = noteMoyenne;
+		this.note = note;
 	}
 
 	@Override
 	public String toString() {
 		return "IdJeu=" + IdJeu + ", nomJeu=" + nomJeu + ", genrePrincipal=" + genrePrincipal
-				+ ", noteMoyenne=" + noteMoyenne;
+				+ ", note=" + note;
 	}
 	
 	

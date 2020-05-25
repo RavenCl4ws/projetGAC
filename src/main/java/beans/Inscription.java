@@ -23,12 +23,13 @@ public class Inscription {
 	private String numeroTel;
 	//private String plateforme;
 	//private String genreFavori;
-	@ManyToMany(cascade= {CascadeType.ALL})
-	@JoinTable(
+	@OneToMany(cascade= {CascadeType.ALL})
+/*	@JoinTable(
 			name="liste_Jeux_Possedes",
 			joinColumns= { @JoinColumn(name="user_id") },
 			inverseJoinColumns = { @JoinColumn(name="jeuvideo_idjeu")}
 			)
+*/
 	private List<JeuVideo> listeJeuxPossedes=new ArrayList<JeuVideo>(); 
 	
 	public Inscription() {}
@@ -130,9 +131,9 @@ public class Inscription {
 
 	@Override
 	public String toString() {
-		return "Id=" + Id + "\n pseudo=" + pseudo + "\n mail=" + mail + "\n motPasse=" + motPasse + "\n nom="
-				+ nom + "\n prenom=" + prenom + "\n dateNaissance=" + dateNaissance + "\n pays=" + pays + "\n numeroTel="
-				+ numeroTel+"\n liste Jeux Possedes=" +listeJeuxPossedes;
+		return "Id=" + Id + "pseudo=" + pseudo + "mail=" + mail + "motPasse=" + motPasse + "nom="
+				+ nom + "prenom=" + prenom + "dateNaissance=" + dateNaissance + "pays=" + pays + "numeroTel="
+				+ numeroTel+"liste Jeux Possedes=" +listeJeuxPossedes;
 	}
 
 

@@ -11,6 +11,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.google.gson.Gson;
+
+
+
 import beans.Inscription;
 import beans.JeuVideo;
 
@@ -40,9 +44,12 @@ public class ConnexionUtilisateur extends HttpServlet {
 		
 		// Récupération des infos depuis Angular
 		String pseudo="jr";
-		String motPasse="mauvaispass";
+		String motPasse="pass";
 		
-		String messageRetour="";
+		String jsonInString="";
+		
+		
+		
 		//Instanciation compte
 		Inscription monCompte=new Inscription();
 		
@@ -55,23 +62,25 @@ public class ConnexionUtilisateur extends HttpServlet {
 		session.beginTransaction();
 		
 		//Vérif existence du compte
-		boolean verifCompte =services.VerifBaseDeDonnees.verifCompte(pseudo, motPasse, session);
-		if (!verifCompte)
-			messageRetour="le compte n'existe pas";
-		if(verifCompte)
-		{
-			Query<Inscription> query=session.createQuery("from Inscription where pseudo=:pseudo AND mot_passe=:motPasse");
-			query.setParameter("pseudo", pseudo);
-			query.setParameter("motPasse", motPasse);
-			//Retour unique plutot que sous forme de liste
-			monCompte = query.uniqueResult();
-			messageRetour="bon retour parmi nous";
-			System.out.println(monCompte.toString());
-			response.getWriter().append(monCompte.toString());
-		}
-		System.out.println(messageRetour);
 		
-		response.getWriter().append(messageRetour);
+		try {
+		monCompte=services.VerifBaseDeDonnees.verifUtilisateur(pseudo, motPasse, session);
+		System.out.println(monCompte);
+		
+		//Objectif: envoyer les données utilisateur en JSON
+		 
+		    jsonInString = new Gson().toJson(monCompte);
+	
+		}
+		catch(Exception e) {
+		
+			jsonInString=new Gson().toJson("le compte n'existe pas");
+		}
+		
+		session.getTransaction().commit();
+		session.close();
+		
+		response.getWriter().append(jsonInString);
 	}
 
 	/**
