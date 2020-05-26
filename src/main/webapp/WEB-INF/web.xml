@@ -29,16 +29,28 @@
   	<servlet-class>ConnexionUtilisateur</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>NoteUtilisateur</servlet-name>
-  	<display-name>NoteUtilisateur</display-name>
+  	<servlet-name>AjoutNoteUtilisateur</servlet-name>
+  	<display-name>AjoutNoteUtilisateur</display-name>
   	<description></description>
-  	<servlet-class>NoteUtilisateur</servlet-class>
+  	<servlet-class>AjoutNoteUtilisateur</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>CalculNoteMoyenneJeu</servlet-name>
   	<display-name>CalculNoteMoyenneJeu</display-name>
   	<description></description>
   	<servlet-class>CalculNoteMoyenneJeu</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SuppressionJeuListeJeuxPossedes</servlet-name>
+  	<display-name>SuppressionJeuListeJeuxPossedes</display-name>
+  	<description></description>
+  	<servlet-class>SuppressionJeuListeJeuxPossedes</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LectureNoteUtilisateur</servlet-name>
+  	<display-name>LectureNoteUtilisateur</display-name>
+  	<description></description>
+  	<servlet-class>LectureNoteUtilisateur</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>test</servlet-name>
@@ -57,12 +69,20 @@
   	<url-pattern>/ConnexionUtilisateur</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>NoteUtilisateur</servlet-name>
-  	<url-pattern>/NoteUtilisateur</url-pattern>
+  	<servlet-name>AjoutNoteUtilisateur</servlet-name>
+  	<url-pattern>/AjoutNoteUtilisateur</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>CalculNoteMoyenneJeu</servlet-name>
   	<url-pattern>/CalculNoteMoyenneJeu</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SuppressionJeuListeJeuxPossedes</servlet-name>
+  	<url-pattern>/SuppressionJeuListeJeuxPossedes</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LectureNoteUtilisateur</servlet-name>
+  	<url-pattern>/LectureNoteUtilisateur</url-pattern>
   </servlet-mapping>
   
 	<filter>

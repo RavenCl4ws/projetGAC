@@ -43,7 +43,7 @@ public class CalculNoteMoyenneJeu extends HttpServlet {
 		String nomJeu="call of duty";
 		double somme=0;
 		double noteMoyenne=0;
-		//SELECT AVG(Note) From JeuVideo WHERE nom=nomJeu
+		
 		
 		//Ouverture session
 				Configuration config = new Configuration();
@@ -53,7 +53,7 @@ public class CalculNoteMoyenneJeu extends HttpServlet {
 		//Début Transaction
 				session.beginTransaction();
 		
-				Query query=session.createQuery("from JeuVideo where nomJeu=:nom AND note>0");
+				Query query=session.createQuery("from JeuVideo where nomJeu=:nom AND note>=0");
 				query.setParameter("nom", nomJeu);
 				List <JeuVideo> resultat=query.list();
 				

@@ -16,13 +16,13 @@ import beans.JeuVideo;
 /**
  * Servlet implementation class NoteUtilisateur
  */
-public class NoteUtilisateur extends HttpServlet {
+public class AjoutNoteUtilisateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoteUtilisateur() {
+    public AjoutNoteUtilisateur() {
         super();
         // TODO Auto-generated constructor stub
     }

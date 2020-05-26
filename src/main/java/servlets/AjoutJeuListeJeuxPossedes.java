@@ -63,12 +63,16 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 		String messageCreationJeu="";
 		// Inutilisé pour one to many: String messageAjoutListeJeuxPossedes="";
 		//Récupération paramètres depuis Angular??
+		
+		//Pour les tests
 		//String nomJeu="call of duty";
 		//String genrePrincipal="guerre";
-		double note=-1;
 		//int idUser=2;
 		
-		//Instanciation User et Jeu à récupérer 
+		double note=-1;
+		
+		
+		//Instanciation User 
 		Inscription monCompte=new Inscription();
 		// inutilisé pour one to many: JeuVideo monJeu= new JeuVideo();
 		
