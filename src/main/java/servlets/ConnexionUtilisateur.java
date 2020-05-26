@@ -1,6 +1,7 @@
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import org.hibernate.cfg.Configuration;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+//import javax.json.JsonObject;
 
 import beans.Inscription;
 import beans.JeuVideo;
@@ -58,8 +60,8 @@ public class ConnexionUtilisateur extends HttpServlet {
 		//String pseudo="jr";
 		//String motPasse="pass";
 		
-		String jsonInString="";
-		
+		String jsonInString;
+		JsonObject jsonRetour;
 		
 		
 		//Instanciation compte
@@ -84,7 +86,14 @@ public class ConnexionUtilisateur extends HttpServlet {
 			int id=monCompte.getId();
 			String x= Integer.toString(id);
 			String pseudoRecup=monCompte.getPseudo();
-		    jsonInString = new Gson().toJson("id:"+x+",pseudo:"+pseudoRecup);
+			
+//			JsonObject jo=Json.createObjectBuilder();
+					 
+			
+			
+		    jsonInString = "{\"id\":\""+x+"\",\"pseudo\":\""+pseudoRecup+"\"}";
+//		    jsonInString = new Gson().toJson("{id:"+x+",pseudo:"+pseudoRecup+"}");
+
 	
 		}
 		catch(Exception e) {
@@ -93,11 +102,18 @@ public class ConnexionUtilisateur extends HttpServlet {
 		}
 		
 		System.out.println(jsonInString);
+		System.out.println(jsonInString.getClass().getName());
 		
 		session.getTransaction().commit();
 		session.close();
 		
-		response.getWriter().append(jsonInString);
+		PrintWriter out = response.getWriter();
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		out.print(jsonInString);
+		out.flush();
+		
+//		response.getWriter().append(jsonInString);
 	}
 
 	/**
