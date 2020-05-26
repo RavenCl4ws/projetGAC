@@ -11,34 +11,10 @@
   	<servlet-class>test</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>TestBase</servlet-name>
-  	<display-name>TestBase</display-name>
+  	<servlet-name>InscriptionUtilisateur</servlet-name>
+  	<display-name>InscriptionUtilisateur</display-name>
   	<description></description>
-  	<servlet-class>TestBase</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>TestInscription</servlet-name>
-  	<display-name>TestInscription</display-name>
-  	<description></description>
-  	<servlet-class>TestInscription</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>TestJeu</servlet-name>
-  	<display-name>TestJeu</display-name>
-  	<description></description>
-  	<servlet-class>TestJeu</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>AjoutJeuPossede</servlet-name>
-  	<display-name>AjoutJeuPossede</display-name>
-  	<description></description>
-  	<servlet-class>AjoutJeuPossede</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>AjoutJeuBase</servlet-name>
-  	<display-name>AjoutJeuBase</display-name>
-  	<description></description>
-  	<servlet-class>AjoutJeuBase</servlet-class>
+  	<servlet-class>InscriptionUtilisateur</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>AjoutJeuListeJeuxPossedes</servlet-name>
@@ -53,34 +29,24 @@
   	<servlet-class>ConnexionUtilisateur</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>TestJson</servlet-name>
-  	<display-name>TestJson</display-name>
+  	<servlet-name>NoteUtilisateur</servlet-name>
+  	<display-name>NoteUtilisateur</display-name>
   	<description></description>
-  	<servlet-class>TestJson</servlet-class>
+  	<servlet-class>NoteUtilisateur</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>CalculNoteMoyenneJeu</servlet-name>
+  	<display-name>CalculNoteMoyenneJeu</display-name>
+  	<description></description>
+  	<servlet-class>CalculNoteMoyenneJeu</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>test</servlet-name>
   	<url-pattern>/test</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>TestBase</servlet-name>
-  	<url-pattern>/TestBase</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>TestInscription</servlet-name>
-  	<url-pattern>/TestInscription</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>TestJeu</servlet-name>
-  	<url-pattern>/TestJeu</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>AjoutJeuPossede</servlet-name>
-  	<url-pattern>/AjoutJeuPossede</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>AjoutJeuBase</servlet-name>
-  	<url-pattern>/AjoutJeuBase</url-pattern>
+  	<servlet-name>InscriptionUtilisateur</servlet-name>
+  	<url-pattern>/InscriptionUtilisateur</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>AjoutJeuListeJeuxPossedes</servlet-name>
@@ -91,8 +57,12 @@
   	<url-pattern>/ConnexionUtilisateur</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>TestJson</servlet-name>
-  	<url-pattern>/TestJson</url-pattern>
+  	<servlet-name>NoteUtilisateur</servlet-name>
+  	<url-pattern>/NoteUtilisateur</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CalculNoteMoyenneJeu</servlet-name>
+  	<url-pattern>/CalculNoteMoyenneJeu</url-pattern>
   </servlet-mapping>
   
 	<filter>
