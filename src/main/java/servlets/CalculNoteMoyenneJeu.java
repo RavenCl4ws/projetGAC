@@ -1,27 +1,29 @@
 
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
+import beans.Inscription;
 import beans.JeuVideo;
 
+
 /**
- * Servlet implementation class AjoutJeuBase
+ * Servlet implementation class CalculNoteMoyenneJeu
  */
-public class AjoutJeuBase extends HttpServlet {
+public class CalculNoteMoyenneJeu extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjoutJeuBase() {
+    public CalculNoteMoyenneJeu() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,46 +34,39 @@ public class AjoutJeuBase extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-				
+		// Objectif: récupérer un nom de jeu depuis angular et calculer la note moyenne donnée à ce jeu par les utilisateurs 
 		
-				String message="";
-				//Ouverture session
+		
+		// Récupération depuis angular
+			// String nomJeu;
+		
+		String nomJeu="call of duty";
+		double somme=0;
+		double noteMoyenne=0;
+		
+		
+		//Ouverture session
 				Configuration config = new Configuration();
 				SessionFactory sessionFactory = config.configure().buildSessionFactory();
 				Session session = sessionFactory.openSession();
 				
-				//Début Transaction
+		//Début Transaction
 				session.beginTransaction();
+		
+				Query query=session.createQuery("from JeuVideo where nomJeu=:nom AND note>=0");
+				query.setParameter("nom", nomJeu);
+				List <JeuVideo> resultat=query.list();
 				
-				//Récupération paramètres depuis Angular??
-				String nomJeu="nomTest";
-				String genrePrincipal="genreTest";
-				double noteMoyenne=10.00;
-				
-				//Vérif existence 
-				boolean succes=false;
-				boolean checkJeu=services.VerifBaseDeDonnees.verifJeu(nomJeu,genrePrincipal,session);
-				//Existe deja
-				if (checkJeu)
-					message="Le jeu existe déjà";
-				
-				//Mise en base
-				if (!checkJeu)
+				for (int i=0;i<resultat.size();i++)
 				{
-					JeuVideo jeuAjoute= new JeuVideo(nomJeu,genrePrincipal,noteMoyenne);
-					session.save(jeuAjoute);
-					checkJeu=services.VerifBaseDeDonnees.verifJeu(nomJeu,genrePrincipal,session);
-					if (checkJeu)
-					{
-						succes=true;
-						message="Le jeu a été ajouté à la BDD";
-					}
+					somme+=resultat.get(i).getNote();
 				}
-
-				//Fin de transaction et fermeture de session
-				session.getTransaction().commit();
-				session.close();		
-				response.getWriter().append(message);
+				System.out.println(somme);
+				noteMoyenne=somme/resultat.size();
+				System.out.println(noteMoyenne);
+		
+				
+		response.getWriter().append("La note moyenne est de "+noteMoyenne);
 	}
 
 	/**

@@ -1,6 +1,8 @@
  
 
 import java.io.IOException;
+import java.util.stream.Collectors;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +13,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import beans.Inscription;
 import beans.JeuVideo;
@@ -44,16 +47,32 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 		
 		//Version 2: on ne vérifie plus si le jeu est dans la base car on doit l'ajouter pour chaque utiisateur
 		
+	// Récupération des infos depuis Angular
+		
+		String requestData = request.getReader().lines().collect(Collectors.joining());
+		//System.out.println(requestData);
+		
+		//Les transformer en JSON pour pouvoir extraire les infos plus facilement
+		JsonObject objetRecu = new JsonParser().parse(requestData).getAsJsonObject();
+		
+		String nomJeu = objetRecu.get("nomJeu").getAsString();
+		String genrePrincipal = objetRecu.get("genre").getAsString();
+		String idUtilisateur = objetRecu.get("userId").getAsString();
+		int idUser=Integer.parseInt(idUtilisateur);
 		
 		String messageCreationJeu="";
 		// Inutilisé pour one to many: String messageAjoutListeJeuxPossedes="";
 		//Récupération paramètres depuis Angular??
-		String nomJeu="pcm";
-		String genrePrincipal="sport";
-		double note=10.00;
-		int idUser=1;
 		
-		//Instanciation User et Jeu à récupérer 
+		//Pour les tests
+		//String nomJeu="call of duty";
+		//String genrePrincipal="guerre";
+		//int idUser=2;
+		
+		double note=-1;
+		
+		
+		//Instanciation User 
 		Inscription monCompte=new Inscription();
 		// inutilisé pour one to many: JeuVideo monJeu= new JeuVideo();
 		
@@ -147,6 +166,7 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 			
 			System.out.println(messageCreationJeu);
 			
+			//A enlever après les tests
 			for (JeuVideo j : monCompte.getListeJeuxPossedes())
 			{
 				System.out.println(j.toString());
@@ -159,12 +179,7 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 				session.getTransaction().commit();
 				session.close();
 				
-				//A modifier pour renvoyer la bonne info à angular: pour le moment affiche les éléments de la liste de jeux possédés sur servlet
-				for (JeuVideo j : monCompte.getListeJeuxPossedes())
-				{
-					response.getWriter().append(j.toString());
-					response.getWriter().append("<br>");
-				}
+				response.getWriter().append(messageCreationJeu);
 				
 	}
 

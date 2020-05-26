@@ -42,9 +42,9 @@ public class ConnexionUtilisateur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		//A faire: récupérer infos angular pseudo+mdp
-		//Aller requeter en bdd pour savoir si existe
-		//si non: renvoyer un message si oui renvoyer infos utilisateur
+		//A faire: récupérer infos angular pseudo+mdp : ok
+		//Aller requeter en bdd pour savoir si existe : ok
+		//si non: renvoyer un message si oui renvoyer infos utilisateur : ok
 		
 		// Récupération des infos depuis Angular
 		
