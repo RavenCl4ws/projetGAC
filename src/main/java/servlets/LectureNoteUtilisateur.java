@@ -1,6 +1,8 @@
 
 
 import java.io.IOException;
+import java.util.stream.Collectors;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import beans.Inscription;
 import beans.JeuVideo;
@@ -33,12 +39,30 @@ public class LectureNoteUtilisateur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		
 		//Infos à récupérer via Angular
+		
+		
+		
+		String requestData = request.getReader().lines().collect(Collectors.joining());
+		//System.out.println(requestData);
+		
+		//Les transformer en JSON pour pouvoir extraire les infos plus facilement
+		JsonObject objetRecu = new JsonParser().parse(requestData).getAsJsonObject();
+		
+		String nomJeu = objetRecu.get("nomJeu").getAsString();
+		String id = objetRecu.get("userId").getAsString();
+		int idUser=Integer.parseInt(id);
+		
+		
+		/* // Pour les tests
 		String nomJeu="call of duty";
 		int idUser=1;
+		*/
 		
 		int idJeu=0;
+		String jsonRetour="";
+		
+		
 		
 		double note;
 		//Instanciation
@@ -71,8 +95,11 @@ public class LectureNoteUtilisateur extends HttpServlet {
 		
 		System.out.println(note);
 		
+		jsonRetour = "{\"note\":\""+note+"\"}";
 		
-		response.getWriter().append("La note du jeu est "+note);
+		System.out.println(jsonRetour);
+		
+		response.getWriter().append(jsonRetour);
 	}
 
 	/**

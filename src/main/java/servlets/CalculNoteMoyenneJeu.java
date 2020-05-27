@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import beans.Inscription;
 import beans.JeuVideo;
@@ -38,12 +42,26 @@ public class CalculNoteMoyenneJeu extends HttpServlet {
 		
 		
 		// Récupération depuis angular
-			// String nomJeu;
 		
+		 
+		String requestData = request.getReader().lines().collect(Collectors.joining());
+		
+		
+		//Les transformer en JSON pour pouvoir extraire les infos plus facilement
+		JsonObject objetRecu = new JsonParser().parse(requestData).getAsJsonObject();
+		
+		String nomJeu = objetRecu.get("nomJeu").getAsString();
+		
+		
+			
+		/*//Pour les tests
 		String nomJeu="call of duty";
+		*/
+		
 		double somme=0;
 		double noteMoyenne=0;
 		
+		String jsonRetour="";
 		
 		//Ouverture session
 				Configuration config = new Configuration();
@@ -65,8 +83,10 @@ public class CalculNoteMoyenneJeu extends HttpServlet {
 				noteMoyenne=somme/resultat.size();
 				System.out.println(noteMoyenne);
 		
+				jsonRetour="{\"noteMoyenne\":\""+noteMoyenne+"\"}";
 				
-		response.getWriter().append("La note moyenne est de "+noteMoyenne);
+				System.out.println(jsonRetour);
+				response.getWriter().append(jsonRetour);
 	}
 
 	/**

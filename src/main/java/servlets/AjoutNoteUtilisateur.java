@@ -1,6 +1,8 @@
 
 
 import java.io.IOException;
+import java.util.stream.Collectors;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import beans.Inscription;
 import beans.JeuVideo;
@@ -38,19 +43,29 @@ public class AjoutNoteUtilisateur extends HttpServlet {
 		
 		// Récupération id et note utilisateur via Angular
 		
-		//String idRentre;
-		//String noteRentree;
-		//String nomJeu;
+		
+		String requestData = request.getReader().lines().collect(Collectors.joining());
+		//System.out.println(requestData);
+		
+		//Les transformer en JSON pour pouvoir extraire les infos plus facilement
+		JsonObject objetRecu = new JsonParser().parse(requestData).getAsJsonObject();
+		
+		String nomJeu = objetRecu.get("nomJeu").getAsString();
+		String noteRentree = objetRecu.get("note").getAsString();
+		String idRentre = objetRecu.get("id").getAsString();
 		
 		
-		// double note=Double.parseDouble(noteRentree);
-		//int idUser=Integer.parseInt(idRentre);
+		 double note=Double.parseDouble(noteRentree);
+		 int idUser=Integer.parseInt(idRentre);
 		
-		double note=-1;
+		
+		/* //Pour les tests
+		double note=15;
 		String nomJeu="call of duty";
 		int idUser=2;
 		int idJeu=0;      //Pas envoyé par angular car présent uniquement dans la bdd
-		
+		*/
+		 
 		String messageRetour="";
 		
 		Inscription monCompte=new Inscription();

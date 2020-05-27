@@ -39,7 +39,7 @@ public class SuppressionJeuListeJeuxPossedes extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		// Récupération des infos depuis Angular
-		/*
+		
 				String requestData = request.getReader().lines().collect(Collectors.joining());
 				//System.out.println(requestData);
 				
@@ -50,12 +50,12 @@ public class SuppressionJeuListeJeuxPossedes extends HttpServlet {
 				String genrePrincipal = objetRecu.get("genre").getAsString();
 				String idUtilisateur = objetRecu.get("userId").getAsString();
 				int idUser=Integer.parseInt(idUtilisateur);
-		*/
-				//Pour les tests
+		
+				/* //Pour les tests
 				String nomJeu="pcm";
 				String genrePrincipal="sport"; 
 				int idUser=1;
-				
+				*/
 				
 				String messageSuppressionJeu="";
 				int idJeu=0;
