@@ -54,9 +54,9 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 		
 		//Les transformer en JSON pour pouvoir extraire les infos plus facilement
 		JsonObject objetRecu = new JsonParser().parse(requestData).getAsJsonObject();
-		
+		String genrePrincipal="N/A";
 		String nomJeu = objetRecu.get("nomJeu").getAsString();
-		String genrePrincipal = objetRecu.get("genre").getAsString();
+		genrePrincipal = objetRecu.get("genre").getAsString();
 		String idUtilisateur = objetRecu.get("userId").getAsString();
 		int idUser=Integer.parseInt(idUtilisateur);
 		

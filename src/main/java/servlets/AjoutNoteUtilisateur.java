@@ -51,8 +51,8 @@ public class AjoutNoteUtilisateur extends HttpServlet {
 		JsonObject objetRecu = new JsonParser().parse(requestData).getAsJsonObject();
 		
 		String nomJeu = objetRecu.get("nomJeu").getAsString();
-		String noteRentree = objetRecu.get("note").getAsString();
-		String idRentre = objetRecu.get("id").getAsString();
+		String noteRentree = objetRecu.get("notePerso").getAsString();
+		String idRentre = objetRecu.get("userId").getAsString();
 		
 		
 		 double note=Double.parseDouble(noteRentree);
@@ -63,8 +63,9 @@ public class AjoutNoteUtilisateur extends HttpServlet {
 		double note=15;
 		String nomJeu="call of duty";
 		int idUser=2;
-		int idJeu=0;      //Pas envoyé par angular car présent uniquement dans la bdd
 		*/
+		 int idJeu=0;      //Pas envoyé par angular car présent uniquement dans la bdd
+		
 		 
 		String messageRetour="";
 		
@@ -104,17 +105,14 @@ public class AjoutNoteUtilisateur extends HttpServlet {
 				
 				System.out.println(messageRetour);
 				
-				for (JeuVideo j : monCompte.getListeJeuxPossedes())
-				{
-					System.out.println(j.toString());
-				}
+//				pour test
+//				for (JeuVideo j : monCompte.getListeJeuxPossedes())
+//				{
+//					System.out.println(j.toString());
+//				}
 				
 				//A modifier pour renvoyer la bonne info à angular: pour le moment affiche les éléments de la liste de jeux possédés sur servlet
-				for (JeuVideo j : monCompte.getListeJeuxPossedes())
-				{
-					response.getWriter().append(j.toString());
-					response.getWriter().append("<br>");
-				}
+				
 				
 				response.getWriter().append(messageRetour);
 				
