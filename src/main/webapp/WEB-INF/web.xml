@@ -52,6 +52,12 @@
   	<description></description>
   	<servlet-class>LectureNoteUtilisateur</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ProfilUtilisateur</servlet-name>
+  	<display-name>ProfilUtilisateur</display-name>
+  	<description></description>
+  	<servlet-class>ProfilUtilisateur</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>test</servlet-name>
   	<url-pattern>/test</url-pattern>
@@ -83,6 +89,10 @@
   <servlet-mapping>
   	<servlet-name>LectureNoteUtilisateur</servlet-name>
   	<url-pattern>/LectureNoteUtilisateur</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProfilUtilisateur</servlet-name>
+  	<url-pattern>/ProfilUtilisateur</url-pattern>
   </servlet-mapping>
   
 	<filter>
