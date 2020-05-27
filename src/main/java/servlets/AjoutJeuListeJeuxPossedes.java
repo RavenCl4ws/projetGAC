@@ -52,11 +52,14 @@ public class AjoutJeuListeJeuxPossedes extends HttpServlet {
 		String requestData = request.getReader().lines().collect(Collectors.joining());
 		//System.out.println(requestData);
 		
-		//Les transformer en JSON pour pouvoir extraire les infos plus facilement
+		// Les transformer en JSON pour pouvoir extraire les infos plus facilement
 		JsonObject objetRecu = new JsonParser().parse(requestData).getAsJsonObject();
 		String genrePrincipal="N/A";
 		String nomJeu = objetRecu.get("nomJeu").getAsString();
-		genrePrincipal = objetRecu.get("genre").getAsString();
+		try {
+			genrePrincipal = objetRecu.get("genre").getAsString();
+		}
+		catch(Exception e) {}
 		String idUtilisateur = objetRecu.get("userId").getAsString();
 		int idUser=Integer.parseInt(idUtilisateur);
 		
