@@ -92,8 +92,8 @@ public class ConnexionUtilisateur extends HttpServlet {
 					 
 			
 			
-		    jsonInString = "{\"id\":\""+x+"\",\"pseudo\":\""+pseudoRecup+"\"}";
-		    jsonInString+=monJeu.toString();
+		    jsonInString = "{\"id\":\""+x+"\",\"pseudo\":\""+pseudoRecup+"\","+"\"monjeu\":"+monJeu.toString()+"}";
+		    
 //		    jsonInString = new Gson().toJson("{id:"+x+",pseudo:"+pseudoRecup+"}");
 
 	
