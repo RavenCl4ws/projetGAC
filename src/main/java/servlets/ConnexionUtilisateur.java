@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -76,7 +77,7 @@ public class ConnexionUtilisateur extends HttpServlet {
 		session.beginTransaction();
 		
 		//Vérif existence du compte
-		
+		String x="",pseudoRecup="";
 		try {
 		monCompte=services.VerifBaseDeDonnees.verifUtilisateur(pseudo, motPasse, session);
 		System.out.println(monCompte);
@@ -84,8 +85,11 @@ public class ConnexionUtilisateur extends HttpServlet {
 		//Objectif: envoyer les données utilisateur en JSON
 		 
 			int id=monCompte.getId();
-			String x= Integer.toString(id);
-			String pseudoRecup=monCompte.getPseudo();
+			x= Integer.toString(id);
+			pseudoRecup=monCompte.getPseudo();
+			
+			
+			
 			monJeu=monCompte.getListeJeuxPossedes().get(0);
 			System.out.println(monJeu);
 //			JsonObject jo=Json.createObjectBuilder();
@@ -93,15 +97,21 @@ public class ConnexionUtilisateur extends HttpServlet {
 			
 			
 		    jsonInString = "{\"id\":\""+x+"\",\"pseudo\":\""+pseudoRecup+"\","+"\"monjeu\":"+monJeu.toString()+"}";
-		    
+		}
+		catch(IndexOutOfBoundsException e)
+			{
+				jsonInString = "{\"id\":\""+x+"\",\"pseudo\":\""+pseudoRecup+"\"}";
+			}
 //		    jsonInString = new Gson().toJson("{id:"+x+",pseudo:"+pseudoRecup+"}");
 
 	
-		}
-		catch(Exception e) {
-		
+		catch(NullPointerException e)
+		 {
+			
 			jsonInString=new Gson().toJson("texteErreur");
 		}
+		
+		
 		
 		System.out.println(jsonInString);
 		System.out.println(jsonInString.getClass().getName());
