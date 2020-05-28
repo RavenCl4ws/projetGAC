@@ -81,6 +81,7 @@ public class CalculNoteMoyenneJeu extends HttpServlet {
 				}
 				System.out.println(somme);
 				noteMoyenne=somme/resultat.size();
+				noteMoyenne=services.VerifBaseDeDonnees.arrondiNDecimales(noteMoyenne,1);
 				System.out.println(noteMoyenne);
 		
 				jsonRetour="{\"noteMoyenne\":\""+noteMoyenne+"\"}";

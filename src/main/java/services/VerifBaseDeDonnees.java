@@ -100,4 +100,11 @@ public static Inscription verifUtilisateur(String pseudo,String motPasse,Session
 	
 }
 
+
+public static double arrondiNDecimales(double x, int n) 
+{ 
+	double pow = Math.pow(10, n); 
+	return (Math.floor(x * pow)) / pow;
+}
+
 }
