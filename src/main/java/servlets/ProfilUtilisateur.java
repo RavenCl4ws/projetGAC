@@ -38,7 +38,7 @@ public class ProfilUtilisateur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		/* // Infos Angular 
+		 // Infos Angular 
 		
 		String requestData = request.getReader().lines().collect(Collectors.joining());
 		//System.out.println(requestData);
@@ -48,10 +48,10 @@ public class ProfilUtilisateur extends HttpServlet {
 		
 		String Id = objetRecu.get("userId").getAsString();
 		int idUser=Integer.parseInt(Id);
-		*/
+		
 		
 		// Test
-		int idUser=1;
+//		int idUser=9;
 		
 		//Instanciation
 		Inscription monCompte=new Inscription();
@@ -70,7 +70,7 @@ public class ProfilUtilisateur extends HttpServlet {
 		
 		 jsonRetour = "{\"id\":\""+monCompte.getId()+"\",\"pseudo\":\""+monCompte.getPseudo() + "\",\"mail\":\""+monCompte.getMail()+"\",\"motPasse\":\""+monCompte.getMotPasse()
 	 		+ "\",\"nom\":\""+monCompte.getNom()+ "\",\"prenom\":\""+monCompte.getPrenom()+ "\",\"dateNaissance\":\""+monCompte.getDateNaissance()
-	 		+ "\",\"pays\":\""+monCompte.getPays()+ "\",\"numeroTel\":\""+monCompte.getNumeroTel()+ "\",\"listeJeux\":\""+monCompte.getListeJeuxPossedes()+"\"}";
+	 		+ "\",\"pays\":\""+monCompte.getPays()+ "\",\"numeroTel\":\""+monCompte.getNumeroTel()+ "\",\"listeJeux\":"+monCompte.getListeJeuxPossedes()+"}";
 		
 		
 		//Fin Transaction et fermeture session

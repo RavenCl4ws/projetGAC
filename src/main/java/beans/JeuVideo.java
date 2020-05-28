@@ -64,8 +64,8 @@ public class JeuVideo {
 
 	@Override
 	public String toString() {
-		return "IdJeu=" + IdJeu + ", nomJeu=" + nomJeu + ", genrePrincipal=" + genrePrincipal
-				+ ", note=" + note;
+		return "{\"IdJeu\":\"" + IdJeu + "\",\"nomJeu\":\"" + nomJeu + "\",\"genrePrincipal\":\"" + genrePrincipal
+				+ "\",\"note\":\"" + note+"\"}";
 	}
 	
 	
