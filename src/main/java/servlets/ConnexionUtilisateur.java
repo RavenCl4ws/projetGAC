@@ -66,7 +66,7 @@ public class ConnexionUtilisateur extends HttpServlet {
 		
 		//Instanciation compte
 		Inscription monCompte=new Inscription();
-		
+		JeuVideo monJeu=new JeuVideo();
 		//Ouverture session
 		Configuration config = new Configuration();
 		SessionFactory sessionFactory = config.configure().buildSessionFactory();
@@ -86,12 +86,14 @@ public class ConnexionUtilisateur extends HttpServlet {
 			int id=monCompte.getId();
 			String x= Integer.toString(id);
 			String pseudoRecup=monCompte.getPseudo();
-			
+			monJeu=monCompte.getListeJeuxPossedes().get(0);
+			System.out.println(monJeu);
 //			JsonObject jo=Json.createObjectBuilder();
 					 
 			
 			
 		    jsonInString = "{\"id\":\""+x+"\",\"pseudo\":\""+pseudoRecup+"\"}";
+		    jsonInString+=monJeu.toString();
 //		    jsonInString = new Gson().toJson("{id:"+x+",pseudo:"+pseudoRecup+"}");
 
 	
